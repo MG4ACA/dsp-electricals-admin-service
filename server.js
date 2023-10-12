@@ -1,16 +1,26 @@
 const Koa = require('koa');
-const parser = require("koa-bodyparser");
-const cors = require("@koa/cors");
-const router = require('./routes/routes');
-const app = new Koa();
-const port = 8001;
+const parser = require('koa-bodyparser');
+const cors = require('@koa/cors');
+const { connectDB } = require('./db/dbConnection');
+const Router = require('koa-router');
+const router = new Router();
 
-app.use(parser())
-app.use(cors())
-app.use(router.routes())
+require('./routes/user')(router);
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+async function main() {
+  const app = new Koa();
+  const port = 8001;
 
+  app
+  .use(parser())
+  .use(cors())
+  .use(router.routes());
 
+  await connectDB();
+
+  app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  });
+}
+
+main();
