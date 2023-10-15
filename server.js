@@ -6,6 +6,7 @@ const Router = require('koa-router');
 const router = new Router();
 
 require('./routes/user')(router);
+require('./routes/product')(router);
 
 async function main() {
   const app = new Koa();
