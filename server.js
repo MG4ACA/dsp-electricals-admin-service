@@ -7,6 +7,8 @@ const router = new Router();
 
 require('./routes/user')(router);
 require('./routes/product')(router);
+require('./routes/seller')(router);
+require('./routes/stock')(router);
 
 async function main() {
   const app = new Koa();
